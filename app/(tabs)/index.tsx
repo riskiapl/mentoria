@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Image } from "expo-image";
 import { Platform, StyleSheet } from "react-native";
 
@@ -5,9 +6,33 @@ import { HelloWave } from "@/components/hello-wave";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Link } from "expo-router";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Link, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
 
 export default function HomeScreen() {
+  const [showPage, setShowPage] = useState<boolean>(false);
+  const router = useRouter();
+
+  const checkOnboarding = async () => {
+    const value = await AsyncStorage.getItem("alreadyLaunched");
+    console.log("Already Launched:", value);
+    if (value === null) {
+      await AsyncStorage.setItem("alreadyLaunched", "true");
+      router.replace("/onboarding");
+    } else {
+      setShowPage(true);
+    }
+  };
+
+  useEffect(() => {
+    checkOnboarding();
+  }, []);
+
+  if (!showPage) {
+    return null;
+  }
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}

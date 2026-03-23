@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "mentoria",
-    "slug": "mentoria",
+    "name": "Soal Hub",
+    "slug": "soal-hub",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mentoria",
+    "scheme": "soal-hub",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
