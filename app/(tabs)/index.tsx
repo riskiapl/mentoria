@@ -1,24 +1,19 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Image } from "expo-image";
-import { Platform, StyleSheet } from "react-native";
-
-import { HelloWave } from "@/components/hello-wave";
 import ParallaxScrollView from "@/components/parallax-scroll-view";
-import { ThemedText } from "@/components/themed-text";
-import { ThemedView } from "@/components/themed-view";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useGlobalStore } from "@/store/global";
+import { Image } from "expo-image";
 import { Link, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import { Platform, StyleSheet, Text, View } from "react-native";
 
 export default function HomeScreen() {
   const [showPage, setShowPage] = useState<boolean>(false);
   const router = useRouter();
+  const { isBoardingCompleted, setBoardingCompleted } = useGlobalStore();
 
   const checkOnboarding = async () => {
-    const value = await AsyncStorage.getItem("alreadyLaunched");
-    console.log("Already Launched:", value);
-    if (value === null) {
-      await AsyncStorage.setItem("alreadyLaunched", "true");
+    if (isBoardingCompleted === false) {
+      // setBoardingCompleted(true);
       router.replace("/onboarding");
     } else {
       setShowPage(true);
@@ -43,30 +38,27 @@ export default function HomeScreen() {
         />
       }
     >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          to see changes. Press{" "}
-          <ThemedText type="defaultSemiBold">
+      <View style={styles.titleContainer}>
+        <Text>Welcome!</Text>
+      </View>
+      <View style={styles.stepContainer}>
+        <Text>Step 1: Try it</Text>
+        <Text>
+          Edit <Text>app/(tabs)/index.tsx</Text> to see changes. Press{" "}
+          <Text>
             {Platform.select({
               ios: "cmd + d",
               android: "cmd + m",
               web: "F12",
             })}
-          </ThemedText>{" "}
+          </Text>{" "}
           to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
+        </Text>
+      </View>
+      <View style={styles.stepContainer}>
         <Link href="/modal">
           <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
+            <Text>Step 2: Explore</Text>
           </Link.Trigger>
           <Link.Preview />
           <Link.Menu>
@@ -91,23 +83,19 @@ export default function HomeScreen() {
           </Link.Menu>
         </Link>
 
-        <ThemedText>
+        <Text>
           {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
+        </Text>
+      </View>
+      <View style={styles.stepContainer}>
+        <Text>Step 3: Get a fresh start</Text>
+        <Text>
           {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">
-            npm run reset-project
-          </ThemedText>{" "}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{" "}
-          directory. This will move the current{" "}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
+          <Text>npm run reset-project</Text> to get a fresh <Text>app</Text>{" "}
+          directory. This will move the current <Text>app</Text> to{" "}
+          <Text>app-example</Text>.
+        </Text>
+      </View>
     </ParallaxScrollView>
   );
 }
