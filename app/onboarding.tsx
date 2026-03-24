@@ -17,7 +17,8 @@ export default function Onboarding() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text>Selamat Datang di Aplikasi!</Text>
+      <Text className="text-lg font-bold">Selamat Datang di Aplikasi!</Text>
+      <Text style={{ color: "#ef4444" }}>Selamat Datang di Aplikasi!</Text>
       <Button title="Mulai Sekarang" onPress={handleFinish} />
     </View>
   );
