@@ -1,13 +1,12 @@
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { useRouter } from "expo-router";
-import { Colors } from "@/constants/theme";
 import { useGlobalStore } from "@/store/global";
-import { Button, StyleSheet, Text, View } from "react-native";
+import { Button, Pressable, Text, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Onboarding() {
   // const router = useRouter();
-  const { toggleTheme, isDarkMode } = useGlobalStore();
-  const colors = Colors[isDarkMode ? "dark" : "light"];
+  const { toggleTheme } = useGlobalStore();
 
   const handleFinish = async () => {
     // await AsyncStorage.setItem("alreadyLaunched", "true");
@@ -16,19 +15,18 @@ export default function Onboarding() {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <Text className="text-lg font-bold">Selamat Datang di Aplikasi!</Text>
-      <Text style={{ color: "#ef4444" }}>Selamat Datang di Aplikasi!</Text>
-      <Button title="Mulai Sekarang" onPress={handleFinish} />
-    </View>
+    <SafeAreaView className="">
+      <View className="bg-red-500 h-screen">
+        <View className="p-6 flex-row justify-end bg-amber-500">
+          <Pressable onPress={handleFinish}>
+            <Text className="text-black dark:text-white">Skip</Text>
+          </Pressable>
+        </View>
+        <Text className="text-gray-600 dark:text-neutral-0">
+          Selamat Datang di Aplikasi!
+        </Text>
+        <Button title="Mulai Sekarang" onPress={handleFinish} />
+      </View>
+    </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    padding: 20,
-  },
-});

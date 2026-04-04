@@ -6,11 +6,17 @@ import {
 } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
+import { useEffect } from "react";
 import "react-native-reanimated";
+import { Uniwind } from "uniwind";
 import "./../global.css";
 
 export default function RootLayout() {
   const { isDarkMode, hasHydrated } = useGlobalStore();
+
+  useEffect(() => {
+    Uniwind.setTheme(isDarkMode ? "dark" : "light");
+  }, [isDarkMode, hasHydrated]);
 
   if (!hasHydrated) {
     return null;
@@ -28,7 +34,7 @@ export default function RootLayout() {
           options={{ presentation: "modal", title: "Modal" }}
         />
       </Stack>
-      <StatusBar style="auto" />
+      <StatusBar style={isDarkMode ? "light" : "dark"} />
     </ThemeProvider>
   );
 }
